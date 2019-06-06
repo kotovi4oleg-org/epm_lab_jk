@@ -6,7 +6,7 @@ pipeline {
                 script {
                    scannerHome = tool 'SonarMSBuild'
                    scannerBuild = "${scannerHome}/SonarScanner.MSBuild.dll"
-                   projectKey = env.GIT_COMMIT
+                   projectKey = env.GIT_URL.tokenize('/')[3].split("\\.")[0].replace("_", "")
                 }
                 withSonarQubeEnv('SonarServer') {
                     echo "%SONAR_HOST_URL%"
