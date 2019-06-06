@@ -6,9 +6,10 @@ pipeline {
                 script {
                    scannerHome = tool 'SonarMS'
                    scannerBuild = "${scannerHome}\\SonarScanner.MSBuild.dll"
+                   projectKey = env.GIT_AUTHOR_NAME
                 }
                 withSonarQubeEnv('Sonar MS') {
-                    bat "dotnet \"${scannerBuild}\" begin /k:%GIT_AUTHOR_NAME% /n:%GIT_AUTHOR_NAME% /v:1.0 /d:sonar.host.url=%SONAR_HOST_URL% /d:sonar.issuesReport.html.enable=true"
+                    bat "dotnet \"${scannerBuild}\" begin /k:${projectKey} /n:${projectKey} /v:1.0 /d:sonar.host.url=%SONAR_HOST_URL% /d:sonar.issuesReport.html.enable=true"
                     bat 'dotnet build'
                     bat "dotnet \"${scannerBuild}\" end"
                 }
